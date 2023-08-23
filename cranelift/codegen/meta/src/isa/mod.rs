@@ -5,6 +5,7 @@ use std::fmt;
 mod arm64;
 mod riscv64;
 mod s390x;
+mod powerpc64;
 pub(crate) mod x86;
 
 /// Represents known ISA target.
@@ -14,6 +15,7 @@ pub enum Isa {
     Arm64,
     S390x,
     Riscv64,
+    Powerpc64,
 }
 
 impl Isa {
@@ -32,13 +34,14 @@ impl Isa {
             "s390x" => Some(Isa::S390x),
             x if ["x86_64", "i386", "i586", "i686"].contains(&x) => Some(Isa::X86),
             "riscv64" | "riscv64gc" | "riscv64imac" => Some(Isa::Riscv64),
+            "powerpc64" | "powerpc64le" | "ppc64" | "ppc64le" => Some(Isa::Powerpc64),
             _ => None,
         }
     }
 
     /// Returns all supported isa targets.
     pub fn all() -> &'static [Isa] {
-        &[Isa::X86, Isa::Arm64, Isa::S390x, Isa::Riscv64]
+        &[Isa::X86, Isa::Arm64, Isa::S390x, Isa::Riscv64, Isa::Powerpc64]
     }
 }
 
@@ -50,6 +53,7 @@ impl fmt::Display for Isa {
             Isa::Arm64 => write!(f, "arm64"),
             Isa::S390x => write!(f, "s390x"),
             Isa::Riscv64 => write!(f, "riscv64"),
+            Isa::Powerpc64 => write!(f, "powerpc64"),
         }
     }
 }
@@ -61,6 +65,7 @@ pub(crate) fn define(isas: &[Isa]) -> Vec<TargetIsa> {
             Isa::Arm64 => arm64::define(),
             Isa::S390x => s390x::define(),
             Isa::Riscv64 => riscv64::define(),
+            Isa::Powerpc64 => powerpc64::define(),
         })
         .collect()
 }

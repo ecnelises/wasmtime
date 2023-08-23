@@ -74,6 +74,9 @@ pub mod riscv64;
 #[cfg(feature = "s390x")]
 mod s390x;
 
+#[cfg(feature = "powerpc64")]
+mod powerpc64;
+
 pub mod unwind;
 
 mod call_conv;
@@ -103,6 +106,7 @@ pub fn lookup(triple: Triple) -> Result<Builder, LookupError> {
         Architecture::Aarch64 { .. } => isa_builder!(aarch64, (feature = "arm64"), triple),
         Architecture::S390x { .. } => isa_builder!(s390x, (feature = "s390x"), triple),
         Architecture::Riscv64 { .. } => isa_builder!(riscv64, (feature = "riscv64"), triple),
+        Architecture::Powerpc64 { .. } => isa_builder!(powerpc64, (feature = "powerpc64"), triple),
         _ => Err(LookupError::Unsupported),
     }
 }
