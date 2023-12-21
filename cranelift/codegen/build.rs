@@ -258,6 +258,19 @@ fn get_isle_compilations(
                 ],
                 untracked_inputs: vec![clif_lower_isle.clone()],
             },
+            // The powerpc64 instruction selector.
+            IsleCompilation {
+                output: out_dir.join("isle_powerpc64.rs"),
+                inputs: vec![
+                    prelude_isle.clone(),
+                    prelude_lower_isle.clone(),
+                    src_isa_aarch64.join("inst.isle"),
+                    src_isa_aarch64.join("inst_neon.isle"),
+                    src_isa_aarch64.join("lower.isle"),
+                    src_isa_aarch64.join("lower_dynamic_neon.isle"),
+                ],
+                untracked_inputs: vec![clif_lower_isle.clone()],
+            },
             // The s390x instruction selector.
             IsleCompilation {
                 output: out_dir.join("isle_s390x.rs"),
